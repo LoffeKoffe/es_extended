@@ -418,7 +418,7 @@ AddEventHandler('esx:useItem', function(itemName)
 end)
 
 RegisterServerEvent('esx:onPickup')
-AddEventHandler('esx:onPickup', function(id)
+AddEventHandler('esx:onPickup', function(id, cb)
 	local _source = source
 	local pickup  = ESX.Pickups[id]
 	local xPlayer = ESX.GetPlayerFromId(_source)
@@ -428,6 +428,9 @@ AddEventHandler('esx:onPickup', function(id)
 			xPlayer.addInventoryItem(pickup.name, pickup.count)
 			ESX.Pickups[id] = nil
 			TriggerClientEvent('esx:removePickup', -1, id)
+			cb(true)
+		else
+			cb(false)
 		end
 	elseif pickup.type == 'item_money' then
 		ESX.Pickups[id] = nil
