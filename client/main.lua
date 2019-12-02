@@ -529,9 +529,12 @@ Citizen.CreateThread(function()
 			end
 
 			if (closestDistance == -1 or closestDistance > 3) and distance <= 1.0 and not v.inRange and IsPedOnFoot(playerPed) then
-				TriggerServerEvent('esx:onPickup', v.id)
-				PlaySoundFrontend(-1, 'PICK_UP', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false)
-				v.inRange = true
+				TriggerServerEvent('esx:onPickup', v.id, function(cb)
+					if cb == true then
+						PlaySoundFrontend(-1, 'PICK_UP', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false)
+						v.inRange = true
+					end
+				end)
 			end
 		end
 	end
